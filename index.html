@@ -26,10 +26,9 @@
 <body>
     <div class="countdown">
         <h1>Citizenship Countdown</h1>
+        <div class="time" id="months">0 months</div>
+        <div class="time" id="weeks">0 weeks</div>
         <div class="time" id="days">0 days</div>
-        <div class="time" id="hours">0 hours</div>
-        <div class="time" id="minutes">0 minutes</div>
-        <div class="time" id="seconds">0 seconds</div>
     </div>
 
     <script>
@@ -38,17 +37,25 @@
 
         function updateCountdown() {
             const now = new Date();
-            const remainingTime = targetDate - now;
+            let remainingTime = targetDate - now;
 
-            const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+            // Calculate remaining months, weeks, and days
+            const oneDay = 1000 * 60 * 60 * 24;
+            const oneWeek = oneDay * 7;
+            const oneMonth = oneDay * 30;  // Approximation for a month
 
+            const months = Math.floor(remainingTime / oneMonth);
+            remainingTime -= months * oneMonth;
+
+            const weeks = Math.floor(remainingTime / oneWeek);
+            remainingTime -= weeks * oneWeek;
+
+            const days = Math.floor(remainingTime / oneDay);
+
+            // Update the countdown elements with calculated time
+            document.getElementById('months').innerText = `${months} months`;
+            document.getElementById('weeks').innerText = `${weeks} weeks`;
             document.getElementById('days').innerText = `${days} days`;
-            document.getElementById('hours').innerText = `${hours} hours`;
-            document.getElementById('minutes').innerText = `${minutes} minutes`;
-            document.getElementById('seconds').innerText = `${seconds} seconds`;
         }
 
         // Update countdown every second
