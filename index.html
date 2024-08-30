@@ -26,9 +26,10 @@
 <body>
     <div class="countdown">
         <h1>Citizenship Countdown</h1>
-        <div class="time" id="months">0 months</div>
-        <div class="time" id="weeks">0 weeks</div>
-        <div class="time" id="days">0 days</div>
+        <div class="time" id="years">0 years</div>
+        <div class="time" id="totalMonths">0 months</div>
+        <div class="time" id="totalWeeks">0 weeks</div>
+        <div class="time" id="totalDays">0 days</div>
     </div>
 
     <script>
@@ -37,25 +38,31 @@
 
         function updateCountdown() {
             const now = new Date();
-            let remainingTime = targetDate - now;
+            const remainingTime = targetDate - now;
 
-            // Calculate remaining months, weeks, and days
+            // Constants for time calculations
             const oneDay = 1000 * 60 * 60 * 24;
             const oneWeek = oneDay * 7;
-            const oneMonth = oneDay * 30;  // Approximation for a month
+            const oneMonth = oneDay * 30.44; // Average days per month, considering leap years
+            const oneYear = oneDay * 365.25; // Average days per year, considering leap years
 
-            const months = Math.floor(remainingTime / oneMonth);
-            remainingTime -= months * oneMonth;
+            // Calculate total years with fraction
+            const years = (remainingTime / oneYear).toFixed(2);
 
-            const weeks = Math.floor(remainingTime / oneWeek);
-            remainingTime -= weeks * oneWeek;
+            // Calculate total months
+            const totalMonths = Math.floor(remainingTime / oneMonth);
 
-            const days = Math.floor(remainingTime / oneDay);
+            // Calculate total weeks
+            const totalWeeks = Math.floor(remainingTime / oneWeek);
+
+            // Calculate total days
+            const totalDays = Math.floor(remainingTime / oneDay);
 
             // Update the countdown elements with calculated time
-            document.getElementById('months').innerText = `${months} months`;
-            document.getElementById('weeks').innerText = `${weeks} weeks`;
-            document.getElementById('days').innerText = `${days} days`;
+            document.getElementById('years').innerText = `${years} years`;
+            document.getElementById('totalMonths').innerText = `${totalMonths} months`;
+            document.getElementById('totalWeeks').innerText = `${totalWeeks} weeks`;
+            document.getElementById('totalDays').innerText = `${totalDays} days`;
         }
 
         // Update countdown every second
